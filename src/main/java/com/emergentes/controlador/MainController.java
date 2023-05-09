@@ -1,13 +1,16 @@
 package com.emergentes.controlador;
 
-import com.emergentes.utiles.ConexionDB;
 import com.emergentes.modelo.libro;
+import com.emergentes.utiles.ConexionDB;
 import java.io.IOException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,14 +60,13 @@ public class MainController extends HttpServlet {
                 ps.setInt(1, id);
                 ps.executeUpdate();
                 response.sendRedirect("MainConroller");
-            }catch (SQLException ex){
-                System.out.println("ERROR AL Conectar" + ex.getMessage());
             }
+        } catch (SQLException ex) {
+            System.out.println("ERROR AL Conectar" + ex.getMessage());
         }
     }
-
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -83,8 +85,9 @@ public class MainController extends HttpServlet {
             Connection conn = canal.conectar();
             PreparedStatement ps;
             ResultSet rs;
+
             if(id == 0){
-            String sql = "insert into libros (isbn,titulo,categoria)";
+            String sql = "insert into libros (isbn,titulo,categoria) values(?,?,?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, lib.getIsbn());
             ps.setString(2, lib.getTitulo());
@@ -99,7 +102,8 @@ public class MainController extends HttpServlet {
         }catch(SQLException ex){
             System.out.println("Error en SQL" + ex.getMessage());
         }
-
-    }
-
+    }    
 }
+
+
+

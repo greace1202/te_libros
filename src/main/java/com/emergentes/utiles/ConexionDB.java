@@ -11,34 +11,33 @@ public class ConexionDB {
     static String driver = "com.mysql.jdbcDriver";
     static String url = "jdbc:mysql://localhost:3306/db_biblioteca";
     static String usuario = "root";
-    static String password = "";
+    static String password = "admin";
 
     Connection conn = null;
 
-    public ConexionDB() throws ClassNotFoundException {
+    public ConexionDB()  {
         try {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, usuario, password);
             if (conn != null) {
                 System.out.println("Conexion OK" + conn);
             }
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error en Driver" + e.getMessage());
-        } catch (SQLException ex) {
+            
+        }catch (SQLException ex) {
             System.out.println("Error de SQl" + ex.getMessage());
-        } catch(ClassNotFoundException ex){
-            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        }catch(ClassNotFoundException ex){
+        Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);    
+        }   
     }
-    public Connection conectar(){
+    public Connection conectar()
+    {
     return conn;
     }
     
     public void desconectar(){
     try{
         conn.close();             
-        }catch (SQLException ex{
+        }catch (SQLException ex){
             Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE,null, ex);
         }
     }
